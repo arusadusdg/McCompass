@@ -1,6 +1,6 @@
 # Big M Compass
 
-Big M Compass is a lightweight progressive web app (PWA) that turns your phone into a compass pointing toward the nearest McDonald's. The distance is displayed in a playful **Blocks** unit (one block equals one meter), and the design is inspired by retro games.
+Big M Compass is a lightweight progressive web app (PWA) that turns your phone into a compass pointing toward the nearest McDonald's. The distance is displayed in a Minecraft **Blocks** unit (one block equals one meter), and the design is inspired by retro games.
 
 ## Setup
 
