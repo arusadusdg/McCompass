@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Big M Compass</title>
+  <!-- The theme color sets the browser chrome on mobile devices -->
+  <meta name="theme-color" content="#1e2b24">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Press Start 2P is a free, blocky font reminiscent of retro games -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Status banner at the top displays transient messages (e.g. searching, offline) -->
+  <header id="status-banner" class="status info">Welcome</header>
+  <main>
+    <!-- The welcome gate is shown on first load and prompts the user to grant permissions -->
+    <section id="welcome-screen" class="welcome">
+      <h1>Big M Compass</h1>
+      <p>Find your way to the nearest McDonald's.</p>
+      <button id="enable-btn" class="primary">Enable Location &amp; Compass</button>
+      <small class="note">We need access to your location and device sensors to point toward the Big M. Tap the button to grant permissions.</small>
+    </section>
+    <!-- The compass card contains the compass itself, distance display and caption -->
+    <section id="compass-card" class="card hidden">
+      <div id="compass" class="compass">
+        <!-- The needle is rotated by JS according to the bearing difference -->
+        <div id="needle" class="needle"></div>
+        <!-- Ticks container; ticks are created dynamically in JS -->
+        <div id="ticks" class="ticks"></div>
+      </div>
+      <!-- Distance readout uses blocky text and updates live -->
+      <div id="distance" class="distance"><span id="distance-prefix">Blocks away from the big M:</span> <span id="blocks">--</span> Blocks</div>
+      <!-- Caption shows the chosen McDonald's name and city, truncated if long -->
+      <div id="caption" class="caption">&ndash;</div>
+    </section>
+  </main>
+  <!-- Recenter button forces a new nearest search; hidden until sensors are enabled -->
+  <button id="recenter" class="recenter hidden" title="Refresh nearest">⟳</button>
+  <!-- Footer contains a simple attribution; fixed at the bottom -->
+  <footer class="footer">
+    <small>McDonald's is a trademark of its respective owner. This is an unofficial fan tool.</small>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>

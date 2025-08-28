@@ -1,0 +1,243 @@
+/*
+ * Stylesheet for Big M Compass
+ *
+ * This CSS defines a dark, Minecraft‑inspired palette and layout. It uses
+ * CSS variables to make the design easy to tweak and supports high‑contrast
+ * mode via the `prefers-contrast` media query. The compass itself is drawn
+ * using simple HTML elements with borders, gradients and pseudo‑elements.
+ */
+
+/* Root variables for colours, sizes and timing */
+:root {
+  --bg: #1e2b24;
+  --card-bg: #2d3d33;
+  --text: #f5f5f5;
+  --accent: #e74c3c;    /* red used for the needle */
+  --secondary: #bdc3c7;
+  --status-info: #2c3e50;
+  --status-success: #27ae60;
+  --status-error: #c0392b;
+  --status-warning: #f39c12;
+  --status-offline: #7f8c8d;
+  --compass-size: 260px;
+}
+
+/* High contrast mode: boost contrast and simplify colours */
+@media (prefers-contrast: more) {
+  :root {
+    --bg: #000;
+    --card-bg: #111;
+    --text: #fff;
+    --accent: #ff0000;
+    --secondary: #ccc;
+  }
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Press Start 2P', cursive, sans-serif;
+  overflow-x: hidden;
+  text-align: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100% - 80px);
+  padding: 20px;
+}
+
+/* Status banner pinned to top */
+.status {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  z-index: 1000;
+  font-size: 0.7rem;
+  font-weight: normal;
+  transition: background-color 0.2s ease;
+}
+.status.info    { background-color: var(--status-info);    color: #ecf0f1; }
+.status.success { background-color: var(--status-success); color: #ecf0f1; }
+.status.error   { background-color: var(--status-error);   color: #ecf0f1; }
+.status.warning { background-color: var(--status-warning); color: #2c3e50; }
+.status.offline { background-color: var(--status-offline); color: #ecf0f1; }
+
+/* Welcome gate styles */
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 320px;
+  margin: auto;
+  gap: 14px;
+}
+.welcome h1 {
+  margin: 20px 0 10px 0;
+  font-size: 1.5rem;
+}
+.welcome p {
+  font-size: 0.75rem;
+  margin-bottom: 10px;
+  color: var(--secondary);
+}
+.welcome .primary {
+  padding: 12px 16px;
+  font-size: 0.7rem;
+  color: var(--bg);
+  background-color: var(--accent);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+.welcome .primary:active {
+  transform: scale(0.98);
+}
+.welcome .note {
+  margin-top: 10px;
+  font-size: 0.55rem;
+  color: var(--secondary);
+  line-height: 1.3;
+}
+
+/* Card housing the compass and data */
+.card {
+  max-width: 90vw;
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.hidden {
+  display: none !important;
+}
+
+/* Compass circle */
+.compass {
+  position: relative;
+  width: var(--compass-size);
+  height: var(--compass-size);
+  border-radius: 50%;
+  border: 6px solid var(--secondary);
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 0 4px rgba(0,0,0,0.7);
+  background: radial-gradient(circle at center, #3d4b44 0%, #2d3d33 70%, #1e2b24 100%);
+  overflow: hidden;
+}
+
+/* Ticks container; ticks will be absolutely positioned inside */
+.ticks {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.tick {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 20px;
+  background-color: var(--secondary);
+  transform-origin: 50% calc(var(--compass-size) * -0.3);
+}
+
+/* Needle: drawn with two pseudo‑elements for head and tail */
+.needle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 110px;
+  transform-origin: 50% 90%;
+  transform: translate(-50%, -90%) rotate(0deg);
+}
+.needle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 40px solid var(--accent);
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
+}
+.needle::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 30px solid var(--secondary);
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.5));
+}
+
+/* Distance readout beneath the compass */
+.distance {
+  font-size: 0.8rem;
+  line-height: 1.3;
+  color: var(--secondary);
+  margin-top: 10px;
+}
+.caption {
+  font-size: 0.6rem;
+  color: var(--secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80%;
+}
+
+/* Recenter button anchored bottom‑right */
+.recenter {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  border: none;
+  color: var(--bg);
+  font-size: 1.2rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+  cursor: pointer;
+  z-index: 1001;
+  transition: transform 0.1s ease;
+}
+.recenter:active {
+  transform: scale(0.95);
+}
+
+/* Footer stays at the bottom on all screens */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 20px;
+  font-size: 0.45rem;
+  color: var(--secondary);
+  text-align: center;
+  background-color: transparent;
+}
